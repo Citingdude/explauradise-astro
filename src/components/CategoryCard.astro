@@ -1,0 +1,13 @@
+---
+import type { Category } from '../data/home';
+import Icon from './Icon.astro';
+interface Props { category: Category; index: number; }
+const { category, index } = Astro.props;
+const glyphs = ['\ue803', '\ue800', '\ue804', '\ue802'];
+---
+<a class="category-card" href={category.href}>
+  <span class="category-icon" aria-hidden="true">{glyphs[index]}</span>
+  <h3>{category.title}</h3>
+  <p>{category.description}</p>
+  <span class="category-action">Ontdek meer <Icon name="arrow" /></span>
+</a>

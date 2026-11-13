@@ -1,0 +1,54 @@
+---
+import { categories, site, socials } from '../data/home';
+import Icon from './Icon.astro';
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="Explauradise — home"><img src="/logo.png" alt="Explauradise" width="396" height="77" /></a>
+    <nav class="desktop-nav" aria-label="Hoofdnavigatie">
+      {categories.map((category) => <a href={category.href}>{category.title}</a>)}
+
+    </nav>
+    <nav class="secondary-nav" aria-label="Over Explauradise"><a href={site.aboutUrl}>Over mij</a><a href={site.contactUrl}>Contact</a></nav>
+    <a class="header-social" href={socials[0].href} aria-label="Explauradise op Instagram"><Icon name="instagram" /></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Menu openen">
+      <Icon name="menu" class="menu-open-icon" /><Icon name="close" class="menu-close-icon" />
+    </button>
+  </div>
+  <nav id="mobile-navigation" class="mobile-nav" aria-label="Mobiele hoofdnavigatie" hidden>
+    <div class="container">
+      {categories.map((category) => <a href={category.href}>{category.title}<Icon name="arrow" /></a>)}
+      <a href={site.aboutUrl}>Over mij<Icon name="arrow" /></a>
+      <a href={site.contactUrl}>Contact<Icon name="arrow" /></a>
+      <a href={socials[0].href}>Instagram<Icon name="instagram" /></a>
+    </div>
+  </nav>
+</header>
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const menu = document.querySelector<HTMLElement>('#mobile-navigation');
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
+      menu.hidden = !open;
+    };
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !menu.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    menu.addEventListener('click', (event) => {
+      if (event.target instanceof Element && event.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('click', (event) => {
+      if (event.target instanceof Node && !menu.hidden && !menu.contains(event.target) && !toggle.contains(event.target)) setOpen(false);
+    });
+    const desktop = window.matchMedia('(min-width: 1100px)');
+    desktop.addEventListener('change', () => {
+      if (desktop.matches) setOpen(false);
+    });
+  }
+</script>

@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Icon from '../components/Icon.astro';
+import { site, categories, articles, socials, inspiration } from '../data/home';
+import plitvice from '../assets/plitvice.jpg';
+import mountains from '../assets/mount-cook.jpg';
+---
+<BaseLayout>
+  <Header />
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-heading">
+      <Image src={site.hero} alt={site.heroAlt} widths={[640, 960, 1250]} sizes="100vw" width={1250} height={675} loading="eager" fetchpriority="high" class="hero-image" />
+      <div class="hero-shade"></div>
+      <h1 id="hero-heading">Explore Laura’s Paradise</h1>
+      <a class="hero-scroll" href="#de-blog" aria-label="Ontdek de blog"><Icon name="arrow-down" /></a>
+    </section>
+
+    <section class="section container instagram-section" aria-labelledby="instagram-heading">
+      <SectionHeading title="Instagram" id="instagram-heading" />
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {inspiration.map((item) => <a href={socials[0].href} aria-label={`${item.alt} — bekijk Explauradise op Instagram`}><Image src={item.image} alt={item.alt} widths={[280, 400, 600]} sizes="(min-width: 1140px) 275px, (min-width: 640px) 23vw, 45vw" width={550} height={550} fit="cover" loading="lazy" class="inspiration-image" /></a>)}
+      </div>
+      <div class="instagram-follow"><p>Een selectie uit mijn avonturen</p><a class="button" href={socials[0].href}><Icon name="instagram" /> Volg op Instagram</a></div>
+    </section>
+
+    <section id="de-blog" class="section container categories-section" aria-labelledby="categories-heading">
+      <SectionHeading title="Mijn blog" id="categories-heading" />
+      <div class="category-grid">{categories.map((category, index) => <CategoryCard category={category} index={index} />)}</div>
+    </section>
+
+    <div class="container content-layout">
+      <div class="blog-column">
+        <section aria-labelledby="articles-heading">
+          <SectionHeading title="Nieuwste blogs" id="articles-heading" />
+          <div class="article-grid">{articles.map((article) => <ArticleCard article={article} />)}</div>
+        </section>
+        <section class="video-section" aria-labelledby="video-heading">
+          <SectionHeading title="Nieuwste video" id="video-heading" />
+          <a class="video-thumbnail" href={site.videoUrl} aria-label="Bekijk de video over de Kikbeekbron op YouTube">
+            <Image src={site.video} alt="Wandelpad tussen twee blauwe meren bij de Kikbeekbron" widths={[480, 800, 1260]} sizes="(min-width: 1140px) 780px, (min-width: 1024px) 65vw, 95vw" width={1000} height={560} fit="cover" loading="lazy" />
+            <span class="play-button"><Icon name="play" /></span>
+          </a>
+          <a class="text-link video-link" href={site.videoUrl}>Bekijk op YouTube <Icon name="arrow" /></a>
+        </section>
+      </div>
+      <aside aria-label="Over Laura" class="author-sidebar">
+        <section class="author-card" aria-labelledby="about-heading">
+          <Image class="author-cover" src={plitvice} alt="De Plitvicemeren" width={600} height={450} fit="cover" loading="lazy" />
+          <Image class="author-portrait" src={site.laura} alt="Laura" width={160} height={160} loading="lazy" />
+          <h2 id="about-heading">Welkom bij Explauradise</h2>
+          <p>Ik ben Laura, een leerkracht uit Limburg, België. Welkom op de pagina van Explauradise, een samenstelling van Explore Laura’s Paradise. Met mijn Instagram en blog wil ik mensen inspireren om naar buiten te gaan.</p>
+          <p>Sinds 2017 gebruik ik Instagram en Facebook als persoonlijk fotoalbum. Al snel kreeg ik meer volgers en vond ik het steeds leuker om mijn foto’s met jullie te delen! Nu heb ik ook mijn eigen blog om al mijn avonturen wat uitgebreider neer te schrijven.</p>
+          <a class="text-link" href={site.aboutUrl}>Meer over mij <Icon name="arrow" /></a>
+        </section>
+        <section class="connect-card" aria-labelledby="connect-heading"><h2 id="connect-heading">Let’s connect</h2><div class="social-links">{socials.map((social) => <a href={social.href} aria-label={`Explauradise op ${social.label}`}><Icon name={social.icon} /></a>)}</div></section>
+      </aside>
+    </div>
+
+    <section class="follow-banner" aria-labelledby="follow-heading">
+      <Image src={mountains} alt="" width={1000} height={246} loading="lazy" class="banner-image" />
+      <div class="container follow-content"><h2 id="follow-heading">Volg mijn avonturen</h2><a class="button" href={socials[0].href}><Icon name="instagram" /> Volg op Instagram</a></div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

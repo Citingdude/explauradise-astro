@@ -1,0 +1,19 @@
+---
+interface Props {
+  name: 'arrow' | 'arrow-down' | 'instagram' | 'facebook' | 'youtube' | 'leaf' | 'play' | 'menu' | 'close';
+  class?: string;
+}
+const { name, class: className } = Astro.props;
+const paths = {
+  arrow: 'M4 12h16m-6-6 6 6-6 6',
+  'arrow-down': 'M12 4v16m-6-6 6 6 6-6',
+  instagram: 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm9 9a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM17.5 6.5h.01',
+  facebook: 'M15 21v-8h3l.5-4H15V7c0-1.1.4-2 2-2h2V1.5c-.7-.1-1.6-.2-2.6-.2C13.2 1.3 11 3.2 11 6.7V9H8v4h3v8',
+  youtube: 'M21 8a3 3 0 0 0-2-3C17 4.5 7 4.5 5 5a3 3 0 0 0-2 3 33 33 0 0 0 0 8 3 3 0 0 0 2 3c2 .5 12 .5 14 0a3 3 0 0 0 2-3 33 33 0 0 0 0-8ZM10 9l5 3-5 3V9Z',
+  leaf: 'M20 3C8 1 2 8 5 15c3 7 15 4 15-12ZM4 21 16 8m-8 9v-6m4 2h5',
+  play: 'm9 5 11 7-11 7V5Z',
+  menu: 'M4 6h16M4 12h16M4 18h16',
+  close: 'm6 6 12 12M6 18 18 6',
+};
+---
+<svg class={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d={paths[name]} /></svg>

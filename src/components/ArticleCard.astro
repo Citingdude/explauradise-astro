@@ -1,0 +1,14 @@
+---
+import { Image } from 'astro:assets';
+import type { Article } from '../data/home';
+import Icon from './Icon.astro';
+interface Props { article: Article; }
+const { article } = Astro.props;
+const displayDate = new Intl.DateTimeFormat('nl-BE', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${article.date}T00:00:00Z`));
+---
+<article class="article-card">
+  <a class="article-link group" href={article.href}>
+    <div class="article-image"><Image src={article.image} alt={article.alt} widths={[400, 600, 800]} sizes="(min-width: 1140px) 245px, (min-width: 1024px) 23vw, (min-width: 640px) 44vw, 90vw" width={760} height={540} fit="cover" loading="lazy" class="transition-transform duration-500 group-hover:scale-105" /><span class="category-label">{article.category}</span></div>
+    <div class="article-copy"><h3>{article.title}</h3><span class="read-more">Lees meer <Icon name="arrow" /></span></div><time class="article-date" datetime={article.date}>{displayDate}</time>
+  </a>
+</article>

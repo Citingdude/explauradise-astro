@@ -1,0 +1,16 @@
+---
+import { Image } from 'astro:assets';
+import { footerGroups, socials } from '../data/home';
+import Icon from './Icon.astro';
+import background from '../assets/footer.jpg';
+---
+<footer class="site-footer">
+  <Image class="footer-image" src={background} alt="" width={1600} loading="lazy" />
+  <div class="container footer-content">
+    <div class="footer-grid">
+      {footerGroups.map((group) => <nav aria-label={group.title}><h2>{group.title}</h2><ul>{group.links.map((link) => <li><a href={link.href}>{link.title}</a></li>)}</ul></nav>)}
+      <div><h2>Let’s connect</h2><div class="social-links">{socials.map((social) => <a href={social.href} aria-label={`Explauradise op ${social.label}`}><Icon name={social.icon} /></a>)}</div></div>
+    </div>
+    <div class="footer-bottom"><p>© {new Date().getFullYear()} Alle rechten voorbehouden Explauradise</p><p>Made by <a href="https://www.vibefusion.be/">vibefusion.be</a></p></div>
+  </div>
+</footer>
